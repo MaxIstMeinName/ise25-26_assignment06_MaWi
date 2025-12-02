@@ -197,5 +197,25 @@ public class SystemTestUtils {
                 UserDto.class,
                 UserDto::id
         );
+        public static UserDto retrieveUserById(Long id) {
+            return given()
+                    .contentType("application/json")
+                    .when()
+                    .get("/api/users/{id}", id)
+                    .then()
+                    .statusCode(200)
+                    .extract().as(UserDto.class);
+        }
+
+        public static UserDto createUser(UserDto userDto) {
+            return given()
+                    .contentType("application/json")
+                    .body(userDto)
+                    .when()
+                    .post("/api/users")
+                    .then()
+                    .statusCode(201)
+                    .extract().as(UserDto.class);
+        }
     }
 }
